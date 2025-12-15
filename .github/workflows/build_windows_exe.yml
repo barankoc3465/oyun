@@ -21,7 +21,7 @@ jobs:
     - name: Python Ortamini Kur (3.x Surumu)
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x' 
+        python-version: '3.11' 
 
     - name: Gerekli Kutuphaneleri Yukle (requirements.txt'den oku)
       run: pip install -r requirements.txt
