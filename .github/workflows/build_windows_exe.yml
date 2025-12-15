@@ -26,10 +26,10 @@ jobs:
     - name: Gerekli Kutuphaneleri Yukle (requirements.txt'den oku)
       run: pip install -r requirements.txt
 
-    - name: EXE Dosyasini PyInstaller ile Olustur
+    - name: EXE Dosyasini Olustur
       run: |
-        # Lutfen dosya adinizin '30.py' oldugunu kontrol edin
-        pyinstaller --onefile --noconsole 30.py
+        pyinstaller --onefile --noconsole --add-data "assets:assets" 30.py
+        # "assets" klasörünü .exe içine "assets" adıyla ekle
         
     - name: Uretilen Dosyayi Yukle (Artifact Olarak)
       uses: actions/upload-artifact@v4
