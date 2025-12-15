@@ -26,10 +26,18 @@ jobs:
     - name: Gerekli Kutuphaneleri Yukle (requirements.txt'den oku)
       run: pip install -r requirements.txt
 
-    - name: EXE Dosyasini Olustur
+# build_windows_exe.yml dosyasinda bu degisikligi yapin:
+
+    - name: EXE Dosyasini PyInstaller ile Olustur
       run: |
-        pyinstaller --onefile --noconsole --add-data "assets:assets" 30.py
-        # "assets" klasörünü .exe içine "assets" adıyla ekle
+        # Sadece ana dosya derleniyor. --add-data KOMUTU KALDIRILDI.
+        pyinstaller --onefile --noconsole 30.py 
+        
+    - name: Uretilen Dosyayi Yukle (Artifact Olarak)
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-Oyun-EXE
+        path: dist/30.exe
         
     - name: Uretilen Dosyayi Yukle (Artifact Olarak)
       uses: actions/upload-artifact@v4
