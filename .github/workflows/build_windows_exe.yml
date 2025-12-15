@@ -1,0 +1,38 @@
+name: Windows EXE Derlemesi
+
+on:
+  # Tetikleyici: Koda bir değişiklik gonderdiginde (push) calistir
+  push:
+    branches:
+      - main  # Eger ana dalinizin adi 'master' ise, burayi 'master' olarak degistirin.
+  
+  # Tetikleyici: Kullanicinin Actions sekmesinden manuel calistirmasina izin ver
+  workflow_dispatch: 
+
+jobs:
+  build:
+    # KRITIK: Isin gercek bir Windows makinesinde calismasini saglar
+    runs-on: windows-latest 
+    
+    steps:
+    - name: Kodu GitHub'dan Cek
+      uses: actions/checkout@v4
+      
+    - name: Python Ortamini Kur (3.x Surumu)
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' 
+
+    - name: Gerekli Kutuphaneleri Yukle (requirements.txt'den oku)
+      run: pip install -r requirements.txt
+
+    - name: EXE Dosyasini PyInstaller ile Olustur
+      run: |
+        # Lutfen dosya adinizin '30.py' oldugunu kontrol edin
+        pyinstaller --onefile --noconsole 30.py
+        
+    - name: Uretilen Dosyayi Yukle (Artifact Olarak)
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-Oyun-EXE
+        path: dist/30.exe # Dosya adi '30.exe' olmali
